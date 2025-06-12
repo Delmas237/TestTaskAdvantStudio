@@ -3,7 +3,7 @@ using Leopotam.Ecs;
 
 namespace Systems
 {
-    public class UpgradeSendEventSystem : IEcsRunSystem
+    public sealed class UpgradeSendEventSystem : IEcsRunSystem
     {
         private readonly EcsFilter<BusinessComponent> _businessFilter;
 
