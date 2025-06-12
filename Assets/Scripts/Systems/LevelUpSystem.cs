@@ -32,8 +32,11 @@ namespace Systems
                     balance.Value -= price;
                     business.Level++;
 
-                    ref var entity = ref _levelUpRequestFilter.GetEntity(i);
-                    entity.Get<LevelUpEvent>();
+                    ref var businessEntity = ref _levelUpRequestFilter.GetEntity(i);
+                    businessEntity.Get<LevelUpEvent>();
+
+                    ref var balanceEntity = ref _balanceFilter.GetEntity(0);
+                    balanceEntity.Get<BalanceUpdatedEvent>();
                 }
             }
         }

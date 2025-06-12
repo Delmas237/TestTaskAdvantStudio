@@ -7,9 +7,9 @@ namespace Systems
 {
     public sealed class UIUpdateSystem : IEcsInitSystem, IEcsRunSystem
     {
-        private readonly EcsFilter<BalanceComponent> _balanceFilter;
         private readonly EcsFilter<BusinessComponent> _businessFilter;
 
+        private readonly EcsFilter<BalanceComponent, BalanceUpdatedEvent> _balanceUpdatedFilter;
         private readonly EcsFilter<BusinessComponent, LevelUpEvent> _levelUpFilter;
         private readonly EcsFilter<BusinessComponent, UpgradeEvent> _upgradeFilter;
 
@@ -28,15 +28,12 @@ namespace Systems
                 var config = _configs[business.Index];
                 business.RefreshableItem.InitializeUI(config, business);
             }
+
+            RefreshBalanceUI();
         }
 
         public void Run()
         {
-            foreach (var i in _balanceFilter)
-            {
-                ref var balance = ref _balanceFilter.Get1(i);
-                balance.Text.text = $"Баланс: {balance.Value:F1}$";
-            }
             foreach (var i in _businessFilter)
             {
                 ref var business = ref _businessFilter.Get1(i);
@@ -57,6 +54,16 @@ namespace Systems
                 var config = _configs[business.Index];
                 business.RefreshableItem.RefreshUpgradeUI(config, business);
                 business.RefreshableItem.RefreshIncomeText(config, business);
+            }
+            RefreshBalanceUI();
+        }
+
+        private void RefreshBalanceUI()
+        {
+            foreach (var i in _balanceUpdatedFilter)
+            {
+                ref var balance = ref _balanceUpdatedFilter.Get1(i);
+                balance.Text.text = $"Баланс: {balance.Value:F1}$";
             }
         }
     }

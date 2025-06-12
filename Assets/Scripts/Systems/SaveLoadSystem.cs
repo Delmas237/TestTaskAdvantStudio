@@ -17,6 +17,9 @@ namespace Systems
                 {
                     ref var balance = ref _balanceFilter.Get1(i);
                     balance.Value = PlayerPrefs.GetFloat("balance");
+
+                    ref var entity = ref _balanceFilter.GetEntity(i);
+                    entity.Get<BalanceUpdatedEvent>();
                 }
             }
             foreach (var i in _businessFilter)

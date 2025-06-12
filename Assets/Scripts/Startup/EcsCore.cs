@@ -35,6 +35,7 @@ public sealed class EcsCore : MonoBehaviour
         _systems.OneFrame<LevelUpRequest>();
         _systems.OneFrame<UpgradeEvent>();
         _systems.OneFrame<LevelUpEvent>();
+        _systems.OneFrame<BalanceUpdatedEvent>();
     }
     private void AddSystems()
     {

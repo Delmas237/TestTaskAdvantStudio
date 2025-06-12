@@ -33,8 +33,11 @@ namespace Systems
                     balance.Value -= price;
                     business.UpgradesPurchased.Add(request.UpgradeIndex);
 
-                    ref var entity = ref _upgradeRequestFilter.GetEntity(i);
-                    entity.Get<UpgradeEvent>();
+                    ref var businessEntity = ref _upgradeRequestFilter.GetEntity(i);
+                    businessEntity.Get<UpgradeEvent>();
+
+                    ref var balanceEntity = ref _balanceFilter.GetEntity(0);
+                    balanceEntity.Get<BalanceUpdatedEvent>();
                 }
             }
         }

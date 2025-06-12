@@ -50,6 +50,9 @@ namespace Systems
                     ref var balance = ref _balanceFilter.Get1(0);
                     balance.Value += business.CurrentIncome;
                     business.Progress = 0f;
+
+                    ref var entity = ref _balanceFilter.GetEntity(0);
+                    entity.Get<BalanceUpdatedEvent>();
                 }
             }
 
