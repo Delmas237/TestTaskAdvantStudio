@@ -1,5 +1,4 @@
-﻿using Components;
-using Leopotam.Ecs;
+﻿using Factories;
 using TMPro;
 using UnityEngine;
 
@@ -15,14 +14,14 @@ namespace UI
 
         private void Awake()
         {
-            var entity = _ecsCore.World.NewEntity();
-            ref var balance = ref entity.Get<BalanceComponent>();
-            balance.Text = _balanceText;
+            var balanceFactory = new BalanceFactory(_ecsCore.World);
+            balanceFactory.Create(_balanceText);
 
+            var businessFactory = new BusinessFactory(_ecsCore.World);
             for (int i = 0; i < _ecsCore.Data.BusinessesConfig.Businesses.Count; i++)
             {
                 var uiItem = Instantiate(_prefab, _content);
-                uiItem.Initialize(i, _ecsCore.World);
+                businessFactory.Create(i, uiItem);
             }
         }
     }

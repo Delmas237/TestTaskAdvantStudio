@@ -11,16 +11,13 @@ namespace Systems
 
         public void Init()
         {
-            if (PlayerPrefs.HasKey("balance"))
+            foreach (var i in _balanceFilter)
             {
-                foreach (var i in _balanceFilter)
-                {
-                    ref var balance = ref _balanceFilter.Get1(i);
-                    balance.Value = PlayerPrefs.GetFloat("balance");
+                ref var balance = ref _balanceFilter.Get1(i);
+                balance.Value = PlayerPrefs.GetFloat("balance");
 
-                    ref var entity = ref _balanceFilter.GetEntity(i);
-                    entity.Get<BalanceUpdatedEvent>();
-                }
+                ref var entity = ref _balanceFilter.GetEntity(i);
+                entity.Get<BalanceUpdatedEvent>();
             }
             foreach (var i in _businessFilter)
             {

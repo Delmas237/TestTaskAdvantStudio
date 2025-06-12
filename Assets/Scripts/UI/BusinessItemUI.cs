@@ -22,18 +22,8 @@ namespace UI
         [SerializeField] private TextMeshProUGUI _levelUpText;
         [SerializeField] private List<TextMeshProUGUI> _upgradeTexts;
 
-        private EcsWorld _world;
-
-        public void Initialize(int index, EcsWorld world)
+        public void Initialize(EcsEntity entity)
         {
-            _world = world;
-            var entity = _world.NewEntity();
-            ref var business = ref entity.Get<BusinessComponent>();
-            business.Index = index;
-            business.Level = index == 0 ? 1 : 0;
-            business.UpgradesPurchased = new List<int>();
-            business.RefreshableItem = this;
-
             _levelUpButton.onClick.AddListener(() => 
             {
                 ref var business = ref entity.Get<BusinessComponent>();
@@ -43,10 +33,10 @@ namespace UI
             for (int i = 0; i < _upgradeButtons.Count; i++)
             {
                 int buffer = i;
-                _upgradeButtons[i].onClick.AddListener(() => RequestUpgrade(ref entity, buffer));
+                _upgradeButtons[i].onClick.AddListener(() => RequestUpgrade(entity, buffer));
             }
         }
-        private void RequestUpgrade(ref EcsEntity entity, int upgradeIndex)
+        private void RequestUpgrade(EcsEntity entity, int upgradeIndex)
         {
             ref var business = ref entity.Get<BusinessComponent>();
             business.UpgradeRequested = true;
